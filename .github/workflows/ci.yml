@@ -1,0 +1,75 @@
+name: Production CI Quality & Security Pipeline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  verify:
+    name: Complete Verification & Release Gates
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js Environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Verify Exact Dependency Pinning (No Range Operators)
+        run: |
+          echo "Auditing package.json for unauthorized range operators (^ or ~)..."
+          if grep -E '[\^~]' package.json; then
+            echo "ERROR: Dependencies must be strictly pinned to exact semver versions."
+            exit 1
+          fi
+          echo "Zero range operators confirmed."
+
+      - name: Clean Dependency Installation (npm ci)
+        run: npm ci || npm install --package-lock-only && npm ci
+
+      - name: Static Typecheck (tsc --noEmit)
+        run: npx tsc --noEmit
+
+      - name: Security Audit (npm audit)
+        run: npm audit --audit-level=high
+
+      - name: Gitleaks Secrets Detection
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Copyright & Trademark Anti-Infringement Gate
+        run: |
+          npx vitest run tests/security/copyright-guard.test.ts
+          if grep -riE "microsoft.*logo|logo.*microsoft" src/; then
+            echo "ERROR: Proprietary trademark or logo reference detected in src/"
+            exit 1
+          fi
+
+      - name: Unit & Domain Logic Tests with Coverage
+        run: npx vitest run --coverage src/domain
+
+      - name: API Integration & Adversarial Security Tests
+        run: |
+          npx vitest run src/api/ tests/security/
+
+      - name: Accessibility (axe-core) & Component Tests
+        run: npx vitest run tests/a11y/ src/ui/components/
+
+      - name: End-to-End & RLS Isolation Tests
+        run: npx vitest run tests/e2e/
+
+      - name: Anti-Duplication Boundary Scan (< 3%)
+        run: npx vitest run src/api/duplication.test.ts
+
+      - name: Production Bundle Build
+        run: npm run build

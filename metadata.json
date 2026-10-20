@@ -1,0 +1,6 @@
+{
+  "name": "CloudFix Architect Readiness Simulator",
+  "description": "Production-grade diagnostic assessment engine and readiness evaluator for cloud architects. Independent and unofficial.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
