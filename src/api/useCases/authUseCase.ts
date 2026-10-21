@@ -22,13 +22,15 @@ export class AuthUseCase {
   ): Promise<{ ok: true; data: z.infer<typeof AuthSessionResponseSchema> } | { ok: false; error: ApiError }> {
     const parsed = RegisterRequestSchema.safeParse(rawInput);
     if (!parsed.success) {
+      const issues = parsed.error.issues.map((i) => i.message);
+      const detailedMessage = issues.length > 0 ? issues.join('. ') : 'Invalid registration payload.';
       return {
         ok: false,
         error: {
           kind: 'ValidationError',
           statusCode: 400,
-          message: 'Invalid registration payload.',
-          issues: parsed.error.issues.map((i) => i.message),
+          message: detailedMessage,
+          issues,
         },
       };
     }

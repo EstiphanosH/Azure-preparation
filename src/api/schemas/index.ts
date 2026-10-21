@@ -14,17 +14,25 @@ export const PasswordPolicySchema = z
 
 export const RegisterRequestSchema = z
   .object({
-    email: z.string().email('Invalid email address format'),
+    email: z.string().trim().email('Invalid email address format'),
     password: PasswordPolicySchema,
-    username: z.string().min(3).max(30).regex(/^[a-zA-Z0-9_-]+$/, 'Username must be alphanumeric'),
-    fullName: z.string().min(2).max(100),
+    username: z
+      .string()
+      .trim()
+      .min(3, 'Username must be at least 3 characters')
+      .max(30, 'Username cannot exceed 30 characters')
+      .transform((val) => val.replace(/\s+/g, '_'))
+      .refine((val) => /^[a-zA-Z0-9_-]+$/.test(val), {
+        message: 'Username must be alphanumeric (letters, numbers, underscores, or hyphens)',
+      }),
+    fullName: z.string().trim().min(2, 'Full name must be at least 2 characters').max(100),
   })
   .strict();
 
 export const LoginRequestSchema = z
   .object({
-    email: z.string().email(),
-    password: z.string().min(1),
+    email: z.string().trim().email('Invalid email address format'),
+    password: z.string().min(1, 'Password is required'),
   })
   .strict();
 

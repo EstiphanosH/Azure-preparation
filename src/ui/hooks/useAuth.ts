@@ -43,7 +43,9 @@ export function useAuth() {
     mutationFn: async (input: z.infer<typeof RegisterRequestSchema>) => {
       const res = await authUseCase.register(input);
       if (!res.ok) {
-        throw new Error(res.error.message);
+        const issues = (res.error as any).issues;
+        const msg = Array.isArray(issues) && issues.length > 0 ? issues.join(' • ') : res.error.message;
+        throw new Error(msg);
       }
       const authData: AuthSession = {
         accessToken: res.data.accessToken,

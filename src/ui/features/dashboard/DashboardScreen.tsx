@@ -6,7 +6,7 @@ import { useQuiz } from '../../hooks/useQuiz.ts';
 import { useUserData } from '../../hooks/useUserData.ts';
 
 export interface DashboardScreenProps {
-  onStartSession: (sessionId: string) => void;
+  onStartSession: (sessionId: string, count?: number) => void;
   onLogout: () => void;
 }
 
@@ -14,14 +14,18 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({ onStartSession
   const { session, userId, logout } = useAuth();
   const { data: readinessData, isLoading: isLoadingReadiness, error: readinessError } = useReadiness(userId);
   const { startSession, isStarting, startError } = useQuiz(userId);
-  const { deleteAccount, isDeleting } = useUserData(userId);
+  const { exportData, deleteAccount, isDeleting } = useUserData(userId);
 
-  const handleStartQuiz = async () => {
+  const handleStartQuiz = async (config?: { totalQuestions?: number; domainId?: string | null }) => {
     try {
-      const res = await startSession({ totalQuestions: 10, domainId: 'DOM-SERVICES' });
-      onStartSession(res.id);
+      const count = Math.min(40, Math.max(10, config?.totalQuestions ?? 10));
+      const res = await startSession({
+        totalQuestions: count,
+        domainId: config?.domainId ?? null,
+      });
+      onStartSession(res.id, count);
     } catch {
-      // Error in hook state
+      // Error handled via hook state
     }
   };
 
@@ -31,20 +35,42 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({ onStartSession
   };
 
   const handleDeleteAccount = async () => {
-    if (window.confirm('Are you sure you want to permanently delete your account and all associated test data?')) {
+    try {
       await deleteAccount();
       onLogout();
+    } catch {
+      // Error handled via hook state
     }
   };
 
   const handleExportData = () => {
-    alert('Candidate GDPR Export initiated. Data package compiled from database view.');
+    const dataToExport = exportData || {
+      candidate: {
+        userId,
+        email: session?.email ?? 'candidate@cloudfix.edu',
+        username: session?.username ?? 'candidate',
+      },
+      exportedAt: new Date().toISOString(),
+      score: readinessData?.overallScore ?? 0,
+      grade: readinessData?.evaluationGrade ?? 'NOT_READY',
+      totalAttempts: readinessData?.totalAttemptsEvaluated ?? 0,
+    };
+
+    const blob = new Blob([JSON.stringify(dataToExport, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `candidate-export-${userId}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
   };
 
   const defaultDomains = [
     {
       domainId: 'DOM-CONCEPTS',
-      domainTitle: 'Cloud Fundamentals & Architectures',
+      domainTitle: 'AZ-900 Domain 1: Cloud Concepts',
       weightPct: 28,
       accuracyPct: 0,
       weightedScore: 0,
@@ -52,7 +78,7 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({ onStartSession
     },
     {
       domainId: 'DOM-SERVICES',
-      domainTitle: 'Compute, Storage & Networking Services',
+      domainTitle: 'AZ-900 Domain 2: Azure Architecture & Services',
       weightPct: 37,
       accuracyPct: 0,
       weightedScore: 0,
@@ -60,7 +86,7 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({ onStartSession
     },
     {
       domainId: 'DOM-SECURITY',
-      domainTitle: 'Identity, Governance & Compliance Controls',
+      domainTitle: 'AZ-900 Domain 3: Azure Management & Governance',
       weightPct: 35,
       accuracyPct: 0,
       weightedScore: 0,

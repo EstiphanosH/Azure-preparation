@@ -2,6 +2,7 @@ import { SessionId, UserId, QuestionId, DomainId, AttemptId } from '../../domain
 import { QuizSession } from '../../domain/model/QuizSession.ts';
 import { Attempt } from '../../domain/model/Attempt.ts';
 import { Question } from '../../domain/model/Question.ts';
+import { SYNTHETIC_QUESTION_BANK } from '../../domain/model/QuestionBank.ts';
 
 export interface CandidateExportData {
   readonly candidate: {
@@ -58,41 +59,7 @@ export class InMemoryQuizRepository implements IQuizRepository {
   }
 
   private seedDefaultQuestions(): void {
-    const defaultQuestions: Question[] = [
-      {
-        id: 'Q-01' as QuestionId,
-        domainId: 'DOM-CONCEPTS' as DomainId,
-        difficulty: 'Novice',
-        prompt: 'Which cloud computing characteristic provides automated scaling based on workload demand?',
-        options: ['Rapid Elasticity', 'Resource Pooling', 'Measured Service', 'Broad Network Access'],
-        correctAnswerIndex: 0,
-        explanation: 'Rapid elasticity allows workloads to dynamically scale out or in based on traffic patterns.',
-        sourceOutlineTheme: 'Cloud Computing Architecture Principles',
-      },
-      {
-        id: 'Q-02' as QuestionId,
-        domainId: 'DOM-SERVICES' as DomainId,
-        difficulty: 'Associate',
-        prompt: 'Which storage tier provides the most cost-effective durability for rarely accessed archive data?',
-        options: ['Hot Storage', 'Cool Storage', 'Cold / Archive Storage', 'Premium SSD Tier'],
-        correctAnswerIndex: 2,
-        explanation: 'Archive tiers offer lowest storage cost for data with access latencies measured in hours.',
-        sourceOutlineTheme: 'Storage Service Optimization',
-      },
-      {
-        id: 'Q-03' as QuestionId,
-        domainId: 'DOM-SECURITY' as DomainId,
-        difficulty: 'Associate',
-
-        prompt: 'Which architectural model assumes zero implicit trust and requires continuous authentication?',
-        options: ['Perimeter Security', 'Zero Trust Architecture', 'Defense in Depth', 'Role-Based Access Control'],
-        correctAnswerIndex: 1,
-        explanation: 'Zero Trust explicitly verifies all access requests regardless of network origin.',
-        sourceOutlineTheme: 'Identity and Security Governance',
-      },
-    ];
-
-    for (const q of defaultQuestions) {
+    for (const q of SYNTHETIC_QUESTION_BANK) {
       this.questions.set(q.id, q);
     }
   }
@@ -144,7 +111,7 @@ export class InMemoryQuizRepository implements IQuizRepository {
     return this.questions.get(questionId) ?? null;
   }
 
-  public async getQuestionsByDomain(domainId?: DomainId | null, limit = 10): Promise<Question[]> {
+  public async getQuestionsByDomain(domainId?: DomainId | null, limit = 40): Promise<Question[]> {
     const results: Question[] = [];
     for (const q of this.questions.values()) {
       if (!domainId || q.domainId === domainId) {

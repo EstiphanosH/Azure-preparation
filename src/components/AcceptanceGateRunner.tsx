@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { CheckCircle2, XCircle, Play, ShieldAlert, Terminal, RefreshCw, FileText, Check } from 'lucide-react';
-import { runAllTests } from '../../tests/runAllAcTests.ts';
+import { runAllTests } from '../engine/acceptanceChecks.ts';
 
 interface GateCheck {
   id: string;

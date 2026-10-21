@@ -15,17 +15,17 @@ export interface DomainWeightConfig {
 export const DEFAULT_DOMAIN_WEIGHTS: readonly DomainWeightConfig[] = [
   {
     domainId: makeDomainId('DOM-CONCEPTS'),
-    domainTitle: 'Cloud Fundamentals & Architectures',
+    domainTitle: 'AZ-900 Domain 1: Cloud Concepts',
     weightPct: 28, // 25-30% range
   },
   {
     domainId: makeDomainId('DOM-SERVICES'),
-    domainTitle: 'Compute, Storage & Networking Services',
+    domainTitle: 'AZ-900 Domain 2: Azure Architecture & Services',
     weightPct: 37, // 35-40% range
   },
   {
     domainId: makeDomainId('DOM-SECURITY'),
-    domainTitle: 'Identity, Governance & Compliance Controls',
+    domainTitle: 'AZ-900 Domain 3: Azure Management & Governance',
     weightPct: 35, // 30-35% range
   },
 ] as const;

@@ -5,12 +5,20 @@ import { useAuth } from '../../hooks/useAuth.ts';
 
 export interface QuizScreenProps {
   sessionId: string;
+  questionCount?: number;
   onSessionFinalized: (finalScore: number) => void;
 }
 
-export const QuizScreen: React.FC<QuizScreenProps> = ({ sessionId, onSessionFinalized }) => {
+export const QuizScreen: React.FC<QuizScreenProps> = ({
+  sessionId,
+  questionCount = 10,
+  onSessionFinalized,
+}) => {
   const { userId } = useAuth();
-  const { data: questions = [], isLoading: isLoadingQuestions } = useQuestions(null);
+  const safeCount = Math.min(40, Math.max(10, questionCount));
+  const { data: allQuestions = [], isLoading: isLoadingQuestions } = useQuestions(null, safeCount);
+  const questions = allQuestions.slice(0, safeCount);
+
   const { submitAttempt, isSubmitting, finalizeSession, isFinalizing, submitError, finalizeError } =
     useQuiz(userId);
 
@@ -66,14 +74,14 @@ export const QuizScreen: React.FC<QuizScreenProps> = ({ sessionId, onSessionFina
   };
 
   const handleRequestHint = () => {
-    setActiveHint('Focus on managed infrastructure and cloud-native scaling characteristics.');
+    setActiveHint('Analyze managed infrastructure trade-offs and zero-trust verification rules.');
   };
 
   return (
     <QuizView
       currentQuestion={currentQuestion}
       currentIndex={currentIndex}
-      totalQuestions={questions.length || 3}
+      totalQuestions={questions.length || safeCount}
       selectedIndex={selectedIndex}
       onSelectOption={setSelectedIndex}
       onSubmitAttempt={handleSubmitAttempt}

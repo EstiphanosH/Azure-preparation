@@ -23,11 +23,11 @@ export interface DomainBreakdownChartProps {
 export const DomainBreakdownChart: React.FC<DomainBreakdownChartProps> = ({ breakdown }) => {
   return (
     <div className="space-y-4 font-mono text-xs">
-      <div className="flex items-center justify-between border-b border-slate-800 pb-2">
-        <span className="font-bold text-white uppercase text-[11px] tracking-wider">
+      <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-2">
+        <span className="font-bold text-slate-900 dark:text-white uppercase text-[11px] tracking-wider">
           Architectural Domain Proficiency
         </span>
-        <span className="text-slate-400 text-[10px]">Weight / Accuracy</span>
+        <span className="text-slate-500 dark:text-slate-400 text-[10px]">Weight / Accuracy</span>
       </div>
 
       <div className="space-y-3.5">
@@ -36,14 +36,14 @@ export const DomainBreakdownChart: React.FC<DomainBreakdownChartProps> = ({ brea
           return (
             <div key={item.domainId} className="space-y-1.5">
               <div className="flex items-center justify-between">
-                <span className="text-slate-200 font-semibold truncate max-w-[240px]">
+                <span className="text-slate-800 dark:text-slate-200 font-semibold truncate max-w-[240px]">
                   {item.domainTitle}
                 </span>
                 <div className="flex items-center gap-2">
-                  <span className="text-slate-400 text-[11px]">Weight {item.weightPct}%</span>
+                  <span className="text-slate-500 dark:text-slate-400 text-[11px]">Weight {item.weightPct}%</span>
                   <span
                     className={`font-bold ${
-                      isPassing ? 'text-emerald-400' : 'text-amber-400'
+                      isPassing ? 'text-emerald-600 dark:text-emerald-400' : 'text-amber-600 dark:text-amber-400'
                     }`}
                   >
                     {item.accuracyPct}%
@@ -58,7 +58,7 @@ export const DomainBreakdownChart: React.FC<DomainBreakdownChartProps> = ({ brea
                 aria-valuenow={item.accuracyPct}
                 aria-valuemin={0}
                 aria-valuemax={100}
-                className="w-full h-2.5 bg-slate-950 rounded-full overflow-hidden border border-slate-800"
+                className="w-full h-2.5 bg-slate-100 dark:bg-slate-950 rounded-full overflow-hidden border border-slate-200 dark:border-slate-800"
               >
                 <div
                   style={{ width: `${Math.min(100, Math.max(0, item.accuracyPct))}%` }}

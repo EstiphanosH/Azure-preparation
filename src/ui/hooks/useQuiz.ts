@@ -15,11 +15,11 @@ export const quizQueryKeys = {
   questions: (domainId?: string | null) => [...quizQueryKeys.all, 'questions', domainId ?? 'all'] as const,
 };
 
-export function useQuestions(domainId?: string | null) {
+export function useQuestions(domainId?: string | null, limit: number = 40) {
   return useQuery({
-    queryKey: quizQueryKeys.questions(domainId),
+    queryKey: [...quizQueryKeys.questions(domainId), limit],
     queryFn: async () => {
-      const questions = await quizRepository.getQuestionsByDomain(null, 10);
+      const questions = await quizRepository.getQuestionsByDomain(domainId as any ?? null, limit);
       return questions;
     },
     staleTime: 5 * 60 * 1000,

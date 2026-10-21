@@ -28,7 +28,7 @@ export const ResultsScreen: React.FC<ResultsScreenProps> = ({
   const defaultDomains = [
     {
       domainId: 'DOM-CONCEPTS',
-      domainTitle: 'Cloud Fundamentals & Architectures',
+      domainTitle: 'AZ-900 Domain 1: Cloud Concepts',
       weightPct: 28,
       accuracyPct: 100,
       weightedScore: 28,
@@ -36,7 +36,7 @@ export const ResultsScreen: React.FC<ResultsScreenProps> = ({
     },
     {
       domainId: 'DOM-SERVICES',
-      domainTitle: 'Compute, Storage & Networking Services',
+      domainTitle: 'AZ-900 Domain 2: Azure Architecture & Services',
       weightPct: 37,
       accuracyPct: 100,
       weightedScore: 37,
@@ -44,7 +44,7 @@ export const ResultsScreen: React.FC<ResultsScreenProps> = ({
     },
     {
       domainId: 'DOM-SECURITY',
-      domainTitle: 'Identity, Governance & Compliance Controls',
+      domainTitle: 'AZ-900 Domain 3: Azure Management & Governance',
       weightPct: 35,
       accuracyPct: 100,
       weightedScore: 35,
