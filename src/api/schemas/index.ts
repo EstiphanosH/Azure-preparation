@@ -55,7 +55,7 @@ export const LogoutRequestSchema = z
 export const StartSessionInputSchema = z
   .object({
     domainId: z.string().min(3).max(32).nullable().optional(),
-    totalQuestions: z.number().int().min(1).max(50).default(10),
+    totalQuestions: z.number().int().min(1).max(60).default(50),
   })
   .strict();
 

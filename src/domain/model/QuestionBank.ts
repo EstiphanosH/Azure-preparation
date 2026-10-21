@@ -2,11 +2,12 @@ import { Question } from './Question.ts';
 import { makeQuestionId, makeDomainId } from './Ids.ts';
 
 /**
- * 40 High-Quality Synthetic Diagnostic Questions
+ * 60 High-Quality Synthetic Diagnostic Questions
  * Strictly aligned with Microsoft Azure Fundamentals (AZ-900) Syllabus:
  * - DOM-CONCEPTS: Domain 1 - Describe Cloud Concepts (25–30%)
  * - DOM-SERVICES: Domain 2 - Describe Azure Architecture & Services (35–40%)
  * - DOM-SECURITY: Domain 3 - Describe Azure Management & Governance (30–35%)
+ *   (Including Azure Pricing, Cost Management, Budgets, and Security Architecture)
  *
  * Compliance: Independent educational pedagogy. Zero exam braindumps, zero proprietary logos.
  */
@@ -606,5 +607,317 @@ export const SYNTHETIC_QUESTION_BANK: readonly Question[] = [
     correctAnswerIndex: 0,
     explanation: 'Azure Service Health provides a personalized view of the health of the specific Azure services and regions you use, notifying you about active service outages, planned maintenance windows, and health advisories.',
     sourceOutlineTheme: 'AZ-900: Azure Service Health vs Azure Monitor',
+  },
+
+  // -------------------------------------------------------------
+  // CLOUD CONCEPTS EXTENSIONS (DOM-CONCEPTS) - Q-41 to Q-46
+  // -------------------------------------------------------------
+  {
+    id: makeQuestionId('Q-41'),
+    domainId: makeDomainId('DOM-CONCEPTS'),
+    difficulty: 'Novice',
+    prompt: 'What is the primary operational and billing advantage of serverless computing in Azure (such as Azure Functions) compared to traditional virtual machines?',
+    options: [
+      'Code executes only in response to events, with zero infrastructure management and billing calculated strictly per execution duration and memory used.',
+      'Serverless computing guarantees a dedicated physical server reserved permanently in every Azure region.',
+      'Serverless architectures require manual operating system updates and hypervisor patch installations.',
+      'Serverless functions require upfront three-year reservations and fixed monthly hardware leasing fees.',
+    ],
+    correctAnswerIndex: 0,
+    explanation: 'Serverless computing abstracts infrastructure completely. Developers write event-driven code, and Azure handles automatic scaling and execution. Customers only pay for compute resources consumed while the code is actively executing.',
+    sourceOutlineTheme: 'AZ-900: Serverless Computing Benefits',
+  },
+  {
+    id: makeQuestionId('Q-42'),
+    domainId: makeDomainId('DOM-CONCEPTS'),
+    difficulty: 'Associate',
+    prompt: 'When architecting a business continuity and disaster recovery (BCDR) strategy in Azure, what is the key distinction between Recovery Point Objective (RPO) and Recovery Time Objective (RTO)?',
+    options: [
+      'RPO defines the maximum acceptable data loss measured in time, while RTO defines the maximum acceptable downtime before services must be restored.',
+      'RPO measures network bandwidth latency, while RTO measures data storage compression ratios.',
+      'RPO calculates financial budget variance, while RTO calculates electricity consumption in datacenters.',
+      'RPO applies only to public preview services, while RTO applies exclusively to sovereign government clouds.',
+    ],
+    correctAnswerIndex: 0,
+    explanation: 'RPO (Recovery Point Objective) refers to the maximum tolerable age of unrecovered data resulting from an outage (e.g., losing at most 15 minutes of transactional data). RTO (Recovery Time Objective) specifies the maximum acceptable duration of service downtime.',
+    sourceOutlineTheme: 'AZ-900: Disaster Recovery & Business Continuity',
+  },
+  {
+    id: makeQuestionId('Q-43'),
+    domainId: makeDomainId('DOM-CONCEPTS'),
+    difficulty: 'Advanced',
+    prompt: 'An organization deploys an application comprising an Azure App Service with a 99.95% SLA and an Azure SQL Database with a 99.99% SLA. How is the composite Service Level Agreement (SLA) for the combined application calculated?',
+    options: [
+      'By multiplying the individual SLAs together (99.95% × 99.99% ≈ 99.94%), which yields a composite SLA lower than each individual component.',
+      'By adding both SLAs together and dividing by two to get an average percentage.',
+      'By taking the highest SLA of the two services (99.99%) as the overall system guarantee.',
+      'By subtracting the lower SLA from 100% to determine unmitigated failure probabilities.',
+    ],
+    correctAnswerIndex: 0,
+    explanation: 'Composite SLAs calculate the overall availability of dependent services by multiplying their individual uptime percentages (0.9995 × 0.9999 = 0.99940005, or approximately 99.94%). If either component fails, the multi-tier application is impacted.',
+    sourceOutlineTheme: 'AZ-900: Composite SLAs & Availability Calculation',
+  },
+  {
+    id: makeQuestionId('Q-44'),
+    domainId: makeDomainId('DOM-CONCEPTS'),
+    difficulty: 'Novice',
+    prompt: 'A company increases the RAM and CPU cores of an existing Azure Virtual Machine instance to handle higher database query volume. Which cloud scaling approach does this action represent?',
+    options: [
+      'Vertical Scaling (Scale Up)',
+      'Horizontal Scaling (Scale Out)',
+      'Geographic Geo-Redundancy',
+      'Predictive Auto-Provisioning',
+    ],
+    correctAnswerIndex: 0,
+    explanation: 'Vertical scaling (scaling up) involves upgrading the hardware capacity (CPU, memory, storage IOPS) of an existing single resource. In contrast, horizontal scaling (scaling out) adds more identical compute instances to distribute the workload.',
+    sourceOutlineTheme: 'AZ-900: Vertical vs Horizontal Scaling',
+  },
+  {
+    id: makeQuestionId('Q-45'),
+    domainId: makeDomainId('DOM-CONCEPTS'),
+    difficulty: 'Novice',
+    prompt: 'How does cloud agility benefit an enterprise software engineering team deploying new digital services on Microsoft Azure?',
+    options: [
+      'It enables teams to provision compute, storage, and application environments in minutes rather than waiting weeks or months for physical procurement and hardware installation.',
+      'It permanently guarantees 100.0% zero-latency fiber optic networking globally.',
+      'It eliminates the need for software code testing and continuous delivery pipelines.',
+      'It automatically converts all proprietary on-premises software into open-source code.',
+    ],
+    correctAnswerIndex: 0,
+    explanation: 'Cloud agility is the ability to rapidly allocate, configure, and iterate on cloud services. By provisioning resources in minutes through the Azure Portal, CLI, or ARM/Bicep templates, organizations can innovate and test ideas quickly.',
+    sourceOutlineTheme: 'AZ-900: Cloud Agility & Time-to-Market',
+  },
+  {
+    id: makeQuestionId('Q-46'),
+    domainId: makeDomainId('DOM-CONCEPTS'),
+    difficulty: 'Associate',
+    prompt: 'What occurs if Microsoft Azure fails to meet the published uptime percentage defined in the formal Service Level Agreement (SLA) for a paid service?',
+    options: [
+      'Customers are eligible to receive a financial credit applied as a percentage discount against their future monthly Azure bill.',
+      'Microsoft will physically deliver replacement servers to the customer datacenter.',
+      'All stored customer data is automatically exported to an external cloud provider.',
+      'The customer subscription is automatically upgraded to a dedicated private cloud tier for free.',
+    ],
+    correctAnswerIndex: 0,
+    explanation: 'Azure SLAs represent formal Microsoft commitments for uptime and connectivity. If a paid service fails to achieve its documented SLA threshold, eligible customers can claim Service Credits that reduce their subsequent billing invoices.',
+    sourceOutlineTheme: 'AZ-900: Service Level Agreements & Service Credits',
+  },
+
+  // -------------------------------------------------------------
+  // SECURITY & IDENTITY EXTENSIONS (DOM-SECURITY) - Q-47 to Q-53
+  // -------------------------------------------------------------
+  {
+    id: makeQuestionId('Q-47'),
+    domainId: makeDomainId('DOM-SECURITY'),
+    difficulty: 'Associate',
+    prompt: 'Which Azure security service provides centralized, secure storage and life-cycle management for cryptographic keys, application API secrets, and TLS/SSL certificates backed by FIPS-validated Hardware Security Modules (HSMs)?',
+    options: [
+      'Azure Key Vault',
+      'Azure App Configuration',
+      'Azure Storage Archive Tier',
+      'Azure Managed Disks',
+    ],
+    correctAnswerIndex: 0,
+    explanation: 'Azure Key Vault secures sensitive credentials, database connection strings, passwords, cryptographic keys, and SSL/TLS certificates, ensuring application code never embeds plaintext secrets.',
+    sourceOutlineTheme: 'AZ-900: Azure Key Vault Secrets & Cryptography',
+  },
+  {
+    id: makeQuestionId('Q-48'),
+    domainId: makeDomainId('DOM-SECURITY'),
+    difficulty: 'Associate',
+    prompt: 'Which Azure service provides secure, seamless RDP and SSH connectivity to virtual machines directly through the Azure Portal using HTML5 and TLS, without requiring public IP addresses on the VMs?',
+    options: [
+      'Azure Bastion',
+      'Azure ExpressRoute',
+      'Azure Front Door',
+      'Azure Route Table',
+    ],
+    correctAnswerIndex: 0,
+    explanation: 'Azure Bastion is a fully platform-managed PaaS service provisioned inside your virtual network. It allows secure RDP and SSH remote administration directly in web browsers via port 443 over TLS, shielding VMs from public internet exposure.',
+    sourceOutlineTheme: 'AZ-900: Azure Bastion Secure VM Administration',
+  },
+  {
+    id: makeQuestionId('Q-49'),
+    domainId: makeDomainId('DOM-SECURITY'),
+    difficulty: 'Associate',
+    prompt: 'What is the principal difference between an Azure Network Security Group (NSG) and Azure Firewall?',
+    options: [
+      'An NSG provides basic 5-tuple layer 4 packet filtering for subnets and NICs, whereas Azure Firewall is a fully stateful, managed network firewall service with built-in threat intelligence and layer 7 application filtering.',
+      'An NSG routes inter-regional express traffic, while Azure Firewall encrypts data on USB devices.',
+      'An NSG only works with Linux virtual machines, while Azure Firewall only works with Windows containers.',
+      'An NSG is a paid hardware appliance, while Azure Firewall is a free browser extension.',
+    ],
+    correctAnswerIndex: 0,
+    explanation: 'Network Security Groups (NSGs) filter traffic using 5-tuple rules (source IP/port, destination IP/port, protocol) at layers 3 and 4. Azure Firewall provides centralized, stateful layer 3–7 network and application rule enforcement, threat intelligence feeds, and TLS inspection.',
+    sourceOutlineTheme: 'AZ-900: NSGs vs Azure Firewall',
+  },
+  {
+    id: makeQuestionId('Q-50'),
+    domainId: makeDomainId('DOM-SECURITY'),
+    difficulty: 'Associate',
+    prompt: 'What is the purpose of the Secure Score metric within Microsoft Defender for Cloud?',
+    options: [
+      'It provides a percentage-based measurement of an organization cloud security posture, highlighting vulnerabilities and prioritizing actionable remediation recommendations.',
+      'It grades the typing speed of system administrators configuring firewall rules.',
+      'It tracks the percentage of monthly Azure budget expended on security software.',
+      'It measures internet download bandwidth throughput from Azure blob storage.',
+    ],
+    correctAnswerIndex: 0,
+    explanation: 'The Secure Score in Microsoft Defender for Cloud continually evaluates cloud resources against security baselines. Implementing recommended remediation actions incrementally increases the score and tightens defensive posture.',
+    sourceOutlineTheme: 'AZ-900: Microsoft Defender for Cloud & Secure Score',
+  },
+  {
+    id: makeQuestionId('Q-51'),
+    domainId: makeDomainId('DOM-SECURITY'),
+    difficulty: 'Associate',
+    prompt: 'Which Microsoft Azure service acts as a scalable, cloud-native Security Information and Event Management (SIEM) and Security Orchestration, Automation, and Response (SOAR) solution?',
+    options: [
+      'Microsoft Sentinel',
+      'Azure Event Hubs',
+      'Azure Monitor Activity Log',
+      'Azure Traffic Manager',
+    ],
+    correctAnswerIndex: 0,
+    explanation: 'Microsoft Sentinel delivers intelligent security analytics and threat intelligence across the enterprise, collecting log data at cloud scale, detecting threats using machine learning, and automating incident response.',
+    sourceOutlineTheme: 'AZ-900: Microsoft Sentinel SIEM & SOAR',
+  },
+  {
+    id: makeQuestionId('Q-52'),
+    domainId: makeDomainId('DOM-SECURITY'),
+    difficulty: 'Associate',
+    prompt: 'In Microsoft Entra ID, how does Conditional Access evaluate access requests to enterprise cloud resources?',
+    options: [
+      'It analyzes real-time contextual signals (such as user identity, geographic location, device health, and risk score) to enforce decisions like requiring MFA or blocking access.',
+      'It scans source code repositories for syntax errors before running unit tests.',
+      'It allocates extra CPU cores whenever a user logs into a database server.',
+      'It verifies physical fingerprints at the entrance of regional datacenter facilities.',
+    ],
+    correctAnswerIndex: 0,
+    explanation: 'Microsoft Entra Conditional Access is the policy engine of Zero Trust: it analyzes signals (user/group membership, IP location, device platform, real-time risk) to enforce intelligent access controls, such as requiring MFA or compliant devices.',
+    sourceOutlineTheme: 'AZ-900: Microsoft Entra Conditional Access',
+  },
+  {
+    id: makeQuestionId('Q-53'),
+    domainId: makeDomainId('DOM-SECURITY'),
+    difficulty: 'Novice',
+    prompt: 'Which three foundational principles define the industry-standard Zero Trust security architecture implemented across Microsoft Azure?',
+    options: [
+      'Verify explicitly, Use least privileged access, and Assume breach.',
+      'Trust internal traffic, Grant global administrator permissions, and Avoid encryption.',
+      'Enforce password sharing, Eliminate multi-factor authentication, and Permit anonymous FTP.',
+      'Store secrets in code repositories, Disable firewall logging, and Isolate all DNS.',
+    ],
+    correctAnswerIndex: 0,
+    explanation: 'The Zero Trust security model operates on three core principles: 1) Verify explicitly (authenticate and authorize based on all available data points); 2) Use least privileged access (limit user access with JIT/JEA and risk-based adaptive policies); 3) Assume breach (minimize blast radius and verify end-to-end encryption).',
+    sourceOutlineTheme: 'AZ-900: Zero Trust Architecture Principles',
+  },
+
+  // -------------------------------------------------------------
+  // AZURE PRICING & COST MANAGEMENT EXTENSIONS (DOM-SECURITY) - Q-54 to Q-60
+  // -------------------------------------------------------------
+  {
+    id: makeQuestionId('Q-54'),
+    domainId: makeDomainId('DOM-SECURITY'),
+    difficulty: 'Associate',
+    prompt: 'An enterprise runs steady-state, 24/7 web applications on Azure Virtual Machines. Which pricing option provides up to 72% cost savings in exchange for committing to consistent compute usage over a 1-year or 3-year term?',
+    options: [
+      'Azure Reserved Virtual Machine Instances (Reservations)',
+      'Spot Virtual Machines',
+      'Pay-As-You-Go Standard Rate',
+      'Free Tier Dev/Test Pricing',
+    ],
+    correctAnswerIndex: 0,
+    explanation: 'Azure Reservations enable significant cost discounts (up to 72% compared to standard pay-as-you-go rates) by committing to a one-year or three-year term for predictable, sustained workloads.',
+    sourceOutlineTheme: 'AZ-900: Azure Reservations & Pricing Models',
+  },
+  {
+    id: makeQuestionId('Q-55'),
+    domainId: makeDomainId('DOM-SECURITY'),
+    difficulty: 'Associate',
+    prompt: 'How does an Azure Savings Plan for Compute differ from traditional Azure Reserved VM Instances?',
+    options: [
+      'It provides flexible automated discounts across various VM sizes, series, regions, and compute services (like App Service and Container Apps) based on an hourly monetary spend commitment, rather than locking to a specific VM family and region.',
+      'It only applies to storage accounts and outbound internet traffic.',
+      'It requires paying full price in cash at an on-premises Microsoft store.',
+      'It is only accessible to personal Microsoft consumer accounts.',
+    ],
+    correctAnswerIndex: 0,
+    explanation: 'Azure Savings Plans for Compute offer dynamic discounts across compute resources globally based on committing to an hourly spend (e.g. $5/hour for 1 or 3 years), granting greater architectural flexibility than single-region VM reservations.',
+    sourceOutlineTheme: 'AZ-900: Azure Savings Plans for Compute',
+  },
+  {
+    id: makeQuestionId('Q-56'),
+    domainId: makeDomainId('DOM-SECURITY'),
+    difficulty: 'Associate',
+    prompt: 'Which licensing discount program allows organizations with active Software Assurance on on-premises Windows Server and SQL Server licenses to run Azure virtual workloads at the base compute rate without paying double for OS licensing?',
+    options: [
+      'Azure Hybrid Benefit',
+      'Azure Enterprise Dev/Test Subscriptions',
+      'Microsoft Partner Network Sponsorship',
+      'Azure Marketplace Free Trial',
+    ],
+    correctAnswerIndex: 0,
+    explanation: 'Azure Hybrid Benefit allows organizations with active Software Assurance on existing Windows Server or SQL Server licenses to bring those licenses to Azure, paying only base Linux compute rates for VMs and SQL databases.',
+    sourceOutlineTheme: 'AZ-900: Azure Hybrid Benefit',
+  },
+  {
+    id: makeQuestionId('Q-57'),
+    domainId: makeDomainId('DOM-SECURITY'),
+    difficulty: 'Novice',
+    prompt: 'What happens when the Spending Limit is active on an Azure Free Account or Visual Studio subscription and the monthly included credit allowance is reached?',
+    options: [
+      'All deployed compute resources are immediately deallocated and suspended for the remainder of the billing cycle, preventing any unexpected credit card charges.',
+      'The subscription is automatically charged at triple the standard pay-as-you-go rate.',
+      'All virtual machine disks are permanently formatted and deleted.',
+      'The Azure account is permanently banned and revoked.',
+    ],
+    correctAnswerIndex: 0,
+    explanation: 'Azure Spending Limits protect trial and developer subscription holders from accidental charges. Once the monthly dollar cap or free credit is exhausted, resources are stopped/deallocated without incurring overage fees until the next billing cycle.',
+    sourceOutlineTheme: 'AZ-900: Azure Spending Limits & Billing Protection',
+  },
+  {
+    id: makeQuestionId('Q-58'),
+    domainId: makeDomainId('DOM-SECURITY'),
+    difficulty: 'Associate',
+    prompt: 'Which factors primarily influence the total cost of running resources in Microsoft Azure?',
+    options: [
+      'Resource type, service specifications/tier, geographic Azure region selected, and outbound data egress transfer volume.',
+      'The operating system language settings and the display resolution of the administrator monitor.',
+      'The physical weight of the datacenter cooling fans and the color of server racks.',
+      'The keyboard layout of the developer who created the resource group.',
+    ],
+    correctAnswerIndex: 0,
+    explanation: 'Azure costs are determined by the resource type (VM, DB, storage), service capacity tier, geographic region (datacenters have varying operational costs), duration of usage, and network data egress (inbound data ingress is typically free).',
+    sourceOutlineTheme: 'AZ-900: Factors Affecting Azure Costs',
+  },
+  {
+    id: makeQuestionId('Q-59'),
+    domainId: makeDomainId('DOM-SECURITY'),
+    difficulty: 'Associate',
+    prompt: 'What specific comparative analysis does the Azure Total Cost of Ownership (TCO) Calculator produce for enterprise financial stakeholders?',
+    options: [
+      'A comprehensive cost comparison report contrasting on-premises datacenter operational costs (server hardware, software licensing, datacenter facilities, electricity, and IT administration labor) against equivalent workload deployments in Azure over 1 to 5 years.',
+      'A daily receipt of credit card transactions made in Azure Marketplace.',
+      'A real-time bandwidth audit of fiber-optic cables crossing the Atlantic ocean.',
+      'A list of employee salaries sorted by seniority in the engineering division.',
+    ],
+    correctAnswerIndex: 0,
+    explanation: 'The TCO Calculator models the total expenditure of owning physical on-premises infrastructure (hardware, power, cooling, real estate, IT maintenance labor) compared against migrating those workloads to Azure cloud services over time.',
+    sourceOutlineTheme: 'AZ-900: Total Cost of Ownership (TCO) Calculator',
+  },
+  {
+    id: makeQuestionId('Q-60'),
+    domainId: makeDomainId('DOM-SECURITY'),
+    difficulty: 'Associate',
+    prompt: 'In the Azure Service Lifecycle, what are the support terms and SLA guarantees associated with services released in Public Preview?',
+    options: [
+      'Public Preview features are accessible for evaluation and customer feedback, but they carry no formal Service Level Agreement (SLA) and should not be deployed in production environments.',
+      'Public Preview features carry the highest SLA guarantee (99.999%) and 24/7 dedicated telephone engineering support.',
+      'Public Preview services are only open to Microsoft full-time employees.',
+      'Public Preview services require mandatory hardware appliance purchases.',
+    ],
+    correctAnswerIndex: 0,
+    explanation: 'Azure preview features (Private and Public Preview) allow customers to evaluate upcoming capabilities. They are provided without an SLA, may undergo breaking changes, and are generally excluded from Microsoft commercial production support until General Availability (GA).',
+    sourceOutlineTheme: 'AZ-900: Service Lifecycle - Public Preview vs GA',
   },
 ];

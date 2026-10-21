@@ -18,7 +18,7 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({ onStartSession
 
   const handleStartQuiz = async (config?: { totalQuestions?: number; domainId?: string | null }) => {
     try {
-      const count = Math.min(40, Math.max(10, config?.totalQuestions ?? 10));
+      const count = Math.min(60, Math.max(10, config?.totalQuestions ?? 50));
       const res = await startSession({
         totalQuestions: count,
         domainId: config?.domainId ?? null,

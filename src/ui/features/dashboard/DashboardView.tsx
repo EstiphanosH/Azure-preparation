@@ -1,3 +1,8 @@
+/**
+ * @license
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import React, { useState } from 'react';
 import { Card } from '../../components/Card.tsx';
 import { Button } from '../../components/Button.tsx';
@@ -7,7 +12,19 @@ import { ReadinessGauge } from '../../components/ReadinessGauge.tsx';
 import { DomainBreakdownChart, DomainScoreItem } from '../../components/DomainBreakdownChart.tsx';
 import { Disclaimer } from '../../components/Disclaimer.tsx';
 import { ThemeToggle } from '../../theme/ThemeContext.tsx';
-import { Play, Download, Trash2, LogOut, Activity, AlertCircle, Settings2, Sliders, Check, Shield } from 'lucide-react';
+import { QuickQuizSection } from './QuickQuizSection.tsx';
+import {
+  Play,
+  Download,
+  Trash2,
+  LogOut,
+  Activity,
+  AlertCircle,
+  Sliders,
+  Check,
+  Shield,
+  Zap,
+} from 'lucide-react';
 
 export interface DashboardViewProps {
   userEmail: string;
@@ -42,15 +59,15 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
   isDeleting,
   errorMessage,
 }) => {
-  const [questionCount, setQuestionCount] = useState<number>(10);
+  const [questionCount, setQuestionCount] = useState<number>(50);
   const [selectedDomain, setSelectedDomain] = useState<string | null>(null);
   const [isPurgeModalOpen, setIsPurgeModalOpen] = useState(false);
   const [exportNotice, setExportNotice] = useState<string | null>(null);
 
-  const QUESTION_OPTIONS = [10, 15, 20, 25, 30, 40] as const;
+  const QUESTION_OPTIONS = [10, 15, 20, 25, 30, 40, 50] as const;
 
   const handleStart = () => {
-    const validatedCount = Math.min(40, Math.max(10, questionCount));
+    const validatedCount = Math.min(60, Math.max(10, questionCount));
     onStartQuiz({ totalQuestions: validatedCount, domainId: selectedDomain });
   };
 
@@ -88,6 +105,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
               <span className="text-[11px] text-slate-500 dark:text-slate-400">{userEmail} ({username})</span>
             </div>
           </div>
+
           <div className="flex items-center gap-2">
             <ThemeToggle />
             <Button size="sm" variant="outline" onClick={onLogout} className="flex items-center gap-1.5">
@@ -114,6 +132,12 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           </div>
         )}
 
+        {/* FEATURE: Quick Quiz Feature & Progress Tracker */}
+        <QuickQuizSection
+          onStartQuickQuiz={(config) => onStartQuiz(config)}
+          isStarting={isStartingQuiz}
+        />
+
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
           {/* Readiness Gauge & Quiz Configurator */}
           <div className="md:col-span-5 space-y-6">
@@ -124,17 +148,17 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
               <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-2">
                 <h3 className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-1.5">
                   <Sliders className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />
-                  <span>Configure AZ-900 Diagnostic Quiz</span>
+                  <span>Custom AZ-900 Quiz Parameters</span>
                 </h3>
-                <span className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold">10–40 Questions</span>
+                <span className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold">10–50 Questions</span>
               </div>
 
-              {/* Question Count Selection (Strictly 10 to 40) */}
+              {/* Question Count Selection */}
               <div className="space-y-2">
                 <label className="text-[11px] font-semibold text-slate-700 dark:text-slate-300 block">
                   Select Question Count ({questionCount} questions):
                 </label>
-                <div className="grid grid-cols-3 gap-2 text-xs">
+                <div className="grid grid-cols-4 gap-2 text-xs">
                   {QUESTION_OPTIONS.map((count) => {
                     const isSelected = questionCount === count;
                     return (
@@ -142,7 +166,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                         key={count}
                         type="button"
                         onClick={() => setQuestionCount(count)}
-                        className={`px-2.5 py-1.5 rounded-lg border text-xs font-bold transition-all focus:outline-none focus:ring-2 focus:ring-cyan-500 ${
+                        className={`px-2 py-1.5 rounded-lg border text-xs font-bold transition-all focus:outline-none focus:ring-2 focus:ring-cyan-500 ${
                           isSelected
                             ? 'bg-cyan-500 border-cyan-500 text-slate-950 shadow-sm'
                             : 'bg-slate-50 dark:bg-slate-950/60 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-slate-300 dark:hover:border-slate-700'
@@ -156,15 +180,15 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
 
                 <div className="flex items-center gap-2 pt-1">
                   <label htmlFor="custom-question-slider" className="text-[10px] text-slate-500 dark:text-slate-400">
-                    Custom count (10–40):
+                    Custom count (10–50):
                   </label>
                   <input
                     id="custom-question-slider"
                     type="range"
                     min="10"
-                    max="40"
+                    max="50"
                     step="1"
-                    aria-label="Custom Question Count (between 10 and 40)"
+                    aria-label="Custom Question Count (between 10 and 50)"
                     value={questionCount}
                     onChange={(e) => setQuestionCount(Number(e.target.value))}
                     className="flex-1 accent-cyan-500 cursor-pointer h-1.5 bg-slate-200 dark:bg-slate-800 rounded-lg"
@@ -231,7 +255,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                 <div className="text-center py-8 space-y-2 text-slate-500 dark:text-slate-400">
                   <p className="text-xs">No AZ-900 diagnostic sessions completed yet.</p>
                   <p className="text-[11px] text-slate-400 dark:text-slate-500">
-                    Start a 10–40 question diagnostic session to benchmark your readiness across core AZ-900 domains.
+                    Start a 10–50 question diagnostic session to benchmark your readiness across core AZ-900 domains.
                   </p>
                 </div>
               ) : (

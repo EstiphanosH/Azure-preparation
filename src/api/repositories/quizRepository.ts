@@ -111,7 +111,7 @@ export class InMemoryQuizRepository implements IQuizRepository {
     return this.questions.get(questionId) ?? null;
   }
 
-  public async getQuestionsByDomain(domainId?: DomainId | null, limit = 40): Promise<Question[]> {
+  public async getQuestionsByDomain(domainId?: DomainId | null, limit = 60): Promise<Question[]> {
     const results: Question[] = [];
     for (const q of this.questions.values()) {
       if (!domainId || q.domainId === domainId) {

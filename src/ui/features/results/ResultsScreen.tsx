@@ -1,8 +1,14 @@
-import React from 'react';
+/**
+ * @license
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+import React, { useEffect } from 'react';
 import { ResultsView } from './ResultsView.tsx';
 import { useReadiness } from '../../hooks/useReadiness.ts';
 import { useSessionDetails } from '../../hooks/useQuiz.ts';
 import { useAuth } from '../../hooks/useAuth.ts';
+import { saveQuickQuizRecord } from '../../../domain/quiz/quickQuizGenerator.ts';
 
 export interface ResultsScreenProps {
   sessionId: string;
@@ -55,6 +61,31 @@ export const ResultsScreen: React.FC<ResultsScreenProps> = ({
   const domainBreakdown = readinessData?.domainBreakdown.length
     ? readinessData.domainBreakdown
     : defaultDomains;
+
+  useEffect(() => {
+    if (sessionData && totalQuestions >= 10) {
+      saveQuickQuizRecord({
+        sessionId,
+        date: new Date().toLocaleDateString(undefined, {
+          month: 'short',
+          day: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit',
+        }),
+        score,
+        correctCount,
+        totalQuestions,
+        grade,
+        domainBreakdown: domainBreakdown.map((d) => ({
+          domainId: d.domainId,
+          domainTitle: d.domainTitle,
+          correct: Math.round((d.accuracyPct / 100) * d.attemptsCount) || (d.accuracyPct >= 50 ? 1 : 0),
+          total: d.attemptsCount || 1,
+          percentage: d.accuracyPct,
+        })),
+      });
+    }
+  }, [sessionId, sessionData, totalQuestions, score, correctCount, grade, domainBreakdown]);
 
   return (
     <ResultsView

@@ -15,7 +15,7 @@ export const quizQueryKeys = {
   questions: (domainId?: string | null) => [...quizQueryKeys.all, 'questions', domainId ?? 'all'] as const,
 };
 
-export function useQuestions(domainId?: string | null, limit: number = 40) {
+export function useQuestions(domainId?: string | null, limit: number = 60) {
   return useQuery({
     queryKey: [...quizQueryKeys.questions(domainId), limit],
     queryFn: async () => {
