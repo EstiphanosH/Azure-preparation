@@ -21,7 +21,7 @@ jobs:
       - name: Setup Node.js Environment
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
           cache: 'npm'
 
       - name: Verify Exact Dependency Pinning (No Range Operators)
@@ -34,7 +34,7 @@ jobs:
           echo "Zero range operators confirmed."
 
       - name: Clean Dependency Installation (npm ci)
-        run: npm ci || npm install --package-lock-only && npm ci
+        run: npm ci || npm install
 
       - name: Static Typecheck (tsc --noEmit)
         run: npx tsc --noEmit
