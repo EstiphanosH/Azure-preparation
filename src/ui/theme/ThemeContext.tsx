@@ -117,7 +117,7 @@ export const ThemeToggle: React.FC<{ className?: string }> = ({ className = '' }
       onClick={toggleTheme}
       aria-label={`Switch to ${resolvedTheme === 'dark' ? 'light' : 'dark'} mode`}
       title={`Switch to ${resolvedTheme === 'dark' ? 'light' : 'dark'} mode`}
-      className={`relative inline-flex items-center justify-center p-2 rounded-lg border text-xs font-mono transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500 ${
+      className={`relative inline-flex items-center justify-center p-2 rounded-lg border text-xs font-sans transition-colors focus:outline-none focus:ring-2 focus:ring-sky-500 ${
         resolvedTheme === 'dark'
           ? 'bg-slate-900 border-slate-700 text-amber-300 hover:bg-slate-800'
           : 'bg-white border-slate-300 text-slate-700 hover:bg-slate-100 shadow-sm'

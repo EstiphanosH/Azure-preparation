@@ -6,7 +6,15 @@ import { useQuiz } from '../../hooks/useQuiz.ts';
 import { useUserData } from '../../hooks/useUserData.ts';
 
 export interface DashboardScreenProps {
-  onStartSession: (sessionId: string, count?: number) => void;
+  onStartSession: (
+    sessionId: string,
+    count?: number,
+    timedConfig?: {
+      isTimed?: boolean;
+      timeLimitMinutes?: number;
+      examMode?: 'timed_exam' | 'practice';
+    }
+  ) => void;
   onLogout: () => void;
 }
 
@@ -16,14 +24,24 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({ onStartSession
   const { startSession, isStarting, startError } = useQuiz(userId);
   const { exportData, deleteAccount, isDeleting } = useUserData(userId);
 
-  const handleStartQuiz = async (config?: { totalQuestions?: number; domainId?: string | null }) => {
+  const handleStartQuiz = async (config?: {
+    totalQuestions?: number;
+    domainId?: string | null;
+    isTimed?: boolean;
+    timeLimitMinutes?: number;
+    examMode?: 'timed_exam' | 'practice';
+  }) => {
     try {
-      const count = Math.min(60, Math.max(10, config?.totalQuestions ?? 50));
+      const count = Math.min(80, Math.max(10, config?.totalQuestions ?? 50));
       const res = await startSession({
         totalQuestions: count,
         domainId: config?.domainId ?? null,
       });
-      onStartSession(res.id, count);
+      onStartSession(res.id, count, {
+        isTimed: config?.isTimed,
+        timeLimitMinutes: config?.timeLimitMinutes,
+        examMode: config?.examMode,
+      });
     } catch {
       // Error handled via hook state
     }

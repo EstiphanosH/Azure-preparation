@@ -12,12 +12,18 @@ import { saveQuickQuizRecord } from '../../../domain/quiz/quickQuizGenerator.ts'
 export interface QuizScreenProps {
   sessionId: string;
   questionCount?: number;
+  isTimed?: boolean;
+  timeLimitMinutes?: number;
+  examMode?: 'timed_exam' | 'practice';
   onSessionFinalized: (finalScore: number) => void;
 }
 
 export const QuizScreen: React.FC<QuizScreenProps> = ({
   sessionId,
   questionCount = 50,
+  isTimed = false,
+  timeLimitMinutes = 45,
+  examMode = 'practice',
   onSessionFinalized,
 }) => {
   const { userId } = useAuth();
@@ -33,6 +39,8 @@ export const QuizScreen: React.FC<QuizScreenProps> = ({
   const [hasSubmittedCurrent, setHasSubmittedCurrent] = useState(false);
   const [isCurrentCorrect, setIsCurrentCorrect] = useState<boolean | null>(null);
   const [activeHint, setActiveHint] = useState<string | null>(null);
+  const [elapsedSeconds, setElapsedSeconds] = useState<number>(0);
+  const [timeExpiredNotice, setTimeExpiredNotice] = useState<boolean>(false);
 
   // Candidate progress tracking across all questions in the session
   const [answeredState, setAnsweredState] = useState<
@@ -198,6 +206,7 @@ export const QuizScreen: React.FC<QuizScreenProps> = ({
         totalQuestions: questions.length,
         grade: calculatedScore >= 70 ? 'READY' : calculatedScore >= 50 ? 'REVIEW_REQUIRED' : 'NOT_READY',
         domainBreakdown,
+        timeTakenSeconds: elapsedSeconds,
       });
 
       onSessionFinalized(res.score);
@@ -206,12 +215,21 @@ export const QuizScreen: React.FC<QuizScreenProps> = ({
     }
   };
 
+  const handleTimeExpired = async () => {
+    setTimeExpiredNotice(true);
+    setTimeout(async () => {
+      await handleFinalize();
+    }, 1200);
+  };
+
   const handleRequestHint = () => {
     setActiveHint('Analyze managed infrastructure trade-offs and zero-trust verification rules.');
   };
 
   const answeredIndices = Object.keys(answeredState).map(Number);
   const flaggedList = Array.from(flaggedIndices);
+
+  const timeLimitSeconds = isTimed ? timeLimitMinutes * 60 : undefined;
 
   return (
     <QuizView
@@ -237,6 +255,12 @@ export const QuizScreen: React.FC<QuizScreenProps> = ({
       onJumpToQuestion={handleJumpToQuestion}
       onToggleFlag={handleToggleFlag}
       isCurrentFlagged={flaggedIndices.has(currentIndex)}
+      isTimed={isTimed}
+      timeLimitSeconds={timeLimitSeconds}
+      onTimeExpired={handleTimeExpired}
+      onTimeUpdate={(elapsed) => setElapsedSeconds(elapsed)}
+      examMode={examMode}
+      timeExpiredNotice={timeExpiredNotice}
     />
   );
 };

@@ -59,16 +59,16 @@ export const Modal: React.FC<ModalProps> = ({
         aria-modal="true"
         aria-labelledby={titleId}
         tabIndex={-1}
-        className="w-full max-w-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-6 shadow-2xl focus:outline-none focus:ring-1 focus:ring-cyan-500 font-mono transition-colors"
+        className="w-full max-w-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-6 shadow-2xl focus:outline-none focus:ring-1 focus:ring-sky-500 font-sans antialiased transition-colors"
       >
         <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3 mb-4">
-          <h2 id={titleId} className="text-base font-bold text-slate-900 dark:text-white tracking-tight">
+          <h2 id={titleId} className="font-display text-base font-bold text-slate-900 dark:text-white tracking-tight">
             {title}
           </h2>
           <button
             onClick={onClose}
             aria-label="Close dialog"
-            className="p-1.5 rounded-lg text-slate-500 hover:text-slate-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+            className="p-1.5 rounded-lg text-slate-500 hover:text-slate-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-500"
           >
             <X className="w-4 h-4" />
           </button>

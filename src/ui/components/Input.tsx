@@ -35,10 +35,10 @@ export const Input: React.FC<InputProps> = ({
     .join(' ');
 
   return (
-    <div className="flex flex-col gap-1.5 w-full font-mono text-xs">
+    <div className="flex flex-col gap-1.5 w-full font-sans text-xs">
       <label htmlFor={id} className="text-slate-800 dark:text-slate-200 font-semibold flex items-center justify-between">
         <span>{label}</span>
-        {required && <span className="text-cyan-600 dark:text-cyan-400 font-normal">*required</span>}
+        {required && <span className="text-sky-700 dark:text-sky-300 font-normal">*required</span>}
       </label>
 
       <input
@@ -49,7 +49,7 @@ export const Input: React.FC<InputProps> = ({
         className={`w-full px-3 py-2.5 rounded-lg bg-white dark:bg-slate-950 border transition-all min-h-[44px] text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-slate-950 ${
           errorMessage
             ? 'border-rose-500 focus:ring-rose-500 text-rose-900 dark:text-rose-100'
-            : 'border-slate-300 dark:border-slate-800 focus:border-cyan-500 focus:ring-cyan-400'
+            : 'border-slate-300 dark:border-slate-800 focus:border-sky-500 focus:ring-sky-500'
         } ${className}`}
         {...rest}
       />

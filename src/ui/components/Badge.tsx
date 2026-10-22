@@ -17,16 +17,16 @@ export const Badge: React.FC<BadgeProps> = ({
   ...rest
 }) => {
   const variantStyles = {
-    success: 'bg-emerald-100 border-emerald-300 text-emerald-800 dark:bg-emerald-950/70 dark:border-emerald-500/50 dark:text-emerald-300',
-    warning: 'bg-amber-100 border-amber-300 text-amber-800 dark:bg-amber-950/70 dark:border-amber-500/50 dark:text-amber-300',
-    danger: 'bg-rose-100 border-rose-300 text-rose-800 dark:bg-rose-950/70 dark:border-rose-500/50 dark:text-rose-300',
-    info: 'bg-cyan-100 border-cyan-300 text-cyan-800 dark:bg-cyan-950/70 dark:border-cyan-500/50 dark:text-cyan-300',
-    neutral: 'bg-slate-200 border-slate-300 text-slate-800 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300',
+    success: 'bg-emerald-50 border-emerald-200 text-emerald-800 dark:bg-emerald-950/60 dark:border-emerald-800/60 dark:text-emerald-300',
+    warning: 'bg-amber-50 border-amber-200 text-amber-800 dark:bg-amber-950/60 dark:border-amber-800/60 dark:text-amber-300',
+    danger: 'bg-rose-50 border-rose-200 text-rose-800 dark:bg-rose-950/60 dark:border-rose-800/60 dark:text-rose-300',
+    info: 'bg-sky-50 border-sky-200 text-sky-800 dark:bg-sky-950/60 dark:border-sky-800/60 dark:text-sky-300',
+    neutral: 'bg-slate-100 border-slate-200 text-slate-700 dark:bg-slate-800/80 dark:border-slate-700 dark:text-slate-300',
   }[variant];
 
   return (
     <span
-      className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-mono font-bold border ${variantStyles} ${className}`}
+      className={`inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-sans font-medium border ${variantStyles} ${className}`}
       {...rest}
     >
       {children}

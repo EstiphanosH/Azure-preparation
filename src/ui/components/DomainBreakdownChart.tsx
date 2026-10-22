@@ -22,12 +22,12 @@ export interface DomainBreakdownChartProps {
 
 export const DomainBreakdownChart: React.FC<DomainBreakdownChartProps> = ({ breakdown }) => {
   return (
-    <div className="space-y-4 font-mono text-xs">
+    <div className="space-y-4 font-sans text-xs">
       <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-2">
-        <span className="font-bold text-slate-900 dark:text-white uppercase text-[11px] tracking-wider">
+        <span className="font-display font-bold text-slate-900 dark:text-white uppercase text-[11px] tracking-wider">
           Architectural Domain Proficiency
         </span>
-        <span className="text-slate-500 dark:text-slate-400 text-[10px]">Weight / Accuracy</span>
+        <span className="text-slate-500 dark:text-slate-400 text-[10px] font-mono">Weight / Accuracy</span>
       </div>
 
       <div className="space-y-3.5">
@@ -40,9 +40,9 @@ export const DomainBreakdownChart: React.FC<DomainBreakdownChartProps> = ({ brea
                   {item.domainTitle}
                 </span>
                 <div className="flex items-center gap-2">
-                  <span className="text-slate-500 dark:text-slate-400 text-[11px]">Weight {item.weightPct}%</span>
+                  <span className="text-slate-500 dark:text-slate-400 text-[11px] font-mono tabular-nums">Weight {item.weightPct}%</span>
                   <span
-                    className={`font-bold ${
+                    className={`font-bold font-mono tabular-nums ${
                       isPassing ? 'text-emerald-600 dark:text-emerald-400' : 'text-amber-600 dark:text-amber-400'
                     }`}
                   >

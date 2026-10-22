@@ -8,7 +8,7 @@ import { ResultsView } from './ResultsView.tsx';
 import { useReadiness } from '../../hooks/useReadiness.ts';
 import { useSessionDetails } from '../../hooks/useQuiz.ts';
 import { useAuth } from '../../hooks/useAuth.ts';
-import { saveQuickQuizRecord } from '../../../domain/quiz/quickQuizGenerator.ts';
+import { saveQuickQuizRecord, getQuickQuizHistory } from '../../../domain/quiz/quickQuizGenerator.ts';
 
 export interface ResultsScreenProps {
   sessionId: string;
@@ -24,6 +24,9 @@ export const ResultsScreen: React.FC<ResultsScreenProps> = ({
   const { userId } = useAuth();
   const { data: readinessData, isLoading: isLoadingReadiness } = useReadiness(userId);
   const { data: sessionData, isLoading: isLoadingSession } = useSessionDetails(sessionId);
+
+  const matchedRecord = getQuickQuizHistory().find((r) => r.sessionId === sessionId);
+  const timeTakenSeconds = matchedRecord?.timeTakenSeconds;
 
   const score = sessionData?.session.score ?? readinessData?.overallScore ?? 80;
   const grade = readinessData?.evaluationGrade ?? 'READY';
@@ -98,6 +101,7 @@ export const ResultsScreen: React.FC<ResultsScreenProps> = ({
       onReturnDashboard={onNavigateDashboard}
       onRetakeQuiz={onRetakeQuiz}
       isLoading={isLoadingReadiness || isLoadingSession}
+      timeTakenSeconds={timeTakenSeconds}
     />
   );
 };

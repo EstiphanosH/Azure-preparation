@@ -18,6 +18,7 @@ export interface ResultsViewProps {
   onReturnDashboard: () => void;
   onRetakeQuiz: () => void;
   isLoading?: boolean;
+  timeTakenSeconds?: number;
 }
 
 export const ResultsView: React.FC<ResultsViewProps> = ({
@@ -30,13 +31,14 @@ export const ResultsView: React.FC<ResultsViewProps> = ({
   onReturnDashboard,
   onRetakeQuiz,
   isLoading = false,
+  timeTakenSeconds,
 }) => {
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col justify-between font-mono transition-colors">
+      <div className="min-h-screen bg-slate-50 dark:bg-[#0B0F19] text-slate-900 dark:text-slate-100 flex flex-col justify-between font-sans antialiased transition-colors">
         <main className="flex-1 flex items-center justify-center p-6">
           <div role="status" aria-live="polite" className="text-center space-y-3">
-            <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-cyan-500 mx-auto" />
+            <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-sky-600 mx-auto" />
             <p className="text-xs text-slate-600 dark:text-slate-400">Computing candidate readiness assessment...</p>
           </div>
         </main>
@@ -46,12 +48,12 @@ export const ResultsView: React.FC<ResultsViewProps> = ({
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col justify-between font-mono transition-colors">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#0B0F19] text-slate-900 dark:text-slate-100 flex flex-col justify-between font-sans antialiased transition-colors">
       <header className="border-b border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-900/90 backdrop-blur px-6 py-3.5 sticky top-0 z-30 transition-colors">
         <div className="max-w-4xl mx-auto flex items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <Award className="w-5 h-5 text-cyan-600 dark:text-cyan-400" />
-            <span className="font-bold text-slate-900 dark:text-white text-sm">AZ-900: DIAGNOSTIC OUTCOME & SCORE REPORT</span>
+            <Award className="w-5 h-5 text-sky-700 dark:text-sky-300" />
+            <span className="font-display font-bold text-slate-900 dark:text-white text-sm tracking-tight">AZ-900: DIAGNOSTIC OUTCOME & SCORE REPORT</span>
           </div>
           <div className="flex items-center gap-3">
             <Badge variant="success">RESOLVED</Badge>
@@ -70,18 +72,30 @@ export const ResultsView: React.FC<ResultsViewProps> = ({
           {/* Detailed Statistics & Domain Chart */}
           <div className="md:col-span-7 space-y-6">
             <Card className="space-y-4">
-              <h2 className="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider border-b border-slate-200 dark:border-slate-800 pb-2">
+              <h2 className="font-display text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider border-b border-slate-200 dark:border-slate-800 pb-2">
                 Session Performance Summary
               </h2>
 
-              <div className="grid grid-cols-2 gap-3 text-xs">
-                <div className="bg-slate-50 dark:bg-slate-950 p-3 rounded-lg border border-slate-200 dark:border-slate-800">
-                  <span className="text-slate-500 dark:text-slate-400 text-[10px] block font-semibold">TOTAL QUESTIONS</span>
-                  <span className="text-base font-bold text-slate-900 dark:text-white">{totalQuestions}</span>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+                <div className="bg-slate-50 dark:bg-slate-950/70 p-3 rounded-lg border border-slate-200/80 dark:border-slate-800/80">
+                  <span className="text-slate-500 dark:text-slate-400 text-[10px] block font-semibold uppercase tracking-wider">TOTAL QUESTIONS</span>
+                  <span className="text-base font-bold font-mono tabular-nums text-slate-900 dark:text-white">{totalQuestions}</span>
                 </div>
-                <div className="bg-slate-50 dark:bg-slate-950 p-3 rounded-lg border border-slate-200 dark:border-slate-800">
-                  <span className="text-slate-500 dark:text-slate-400 text-[10px] block font-semibold">CORRECT RESPONSES</span>
-                  <span className="text-base font-bold text-emerald-600 dark:text-emerald-400">{correctCount}</span>
+                <div className="bg-slate-50 dark:bg-slate-950/70 p-3 rounded-lg border border-slate-200/80 dark:border-slate-800/80">
+                  <span className="text-slate-500 dark:text-slate-400 text-[10px] block font-semibold uppercase tracking-wider">CORRECT RESPONSES</span>
+                  <span className="text-base font-bold font-mono tabular-nums text-emerald-600 dark:text-emerald-400">{correctCount}</span>
+                </div>
+                <div className="bg-slate-50 dark:bg-slate-950/70 p-3 rounded-lg border border-slate-200/80 dark:border-slate-800/80">
+                  <span className="text-slate-500 dark:text-slate-400 text-[10px] block font-semibold uppercase tracking-wider">ACCURACY RATE</span>
+                  <span className="text-base font-bold font-mono tabular-nums text-sky-700 dark:text-sky-300">{score}%</span>
+                </div>
+                <div className="bg-slate-50 dark:bg-slate-950/70 p-3 rounded-lg border border-slate-200/80 dark:border-slate-800/80">
+                  <span className="text-slate-500 dark:text-slate-400 text-[10px] block font-semibold uppercase tracking-wider">TIME SPENT</span>
+                  <span className="text-base font-bold font-mono tabular-nums text-slate-900 dark:text-white">
+                    {typeof timeTakenSeconds === 'number' && timeTakenSeconds > 0
+                      ? `${Math.floor(timeTakenSeconds / 60)}m ${timeTakenSeconds % 60}s`
+                      : 'Untimed'}
+                  </span>
                 </div>
               </div>
 

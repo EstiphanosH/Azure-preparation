@@ -36,6 +36,11 @@ export const AppRouter: React.FC<AppRouterProps> = ({
   );
   const [activeSessionId, setActiveSessionId] = useState<string>(initialSessionId || 'sess-default-01');
   const [activeQuestionCount, setActiveQuestionCount] = useState<number>(initialQuestionCount);
+  const [activeTimedConfig, setActiveTimedConfig] = useState<{
+    isTimed?: boolean;
+    timeLimitMinutes?: number;
+    examMode?: 'timed_exam' | 'practice';
+  }>({ isTimed: false, timeLimitMinutes: 45, examMode: 'practice' });
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -43,7 +48,7 @@ export const AppRouter: React.FC<AppRouterProps> = ({
         <FlagProvider>
           <div
             data-testid="app-router-container"
-            className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col font-mono transition-colors"
+            className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col font-sans antialiased transition-colors"
           >
             {currentRoute === 'auth' && (
               <AuthScreen onAuthenticated={() => setCurrentRoute('dashboard')} />
@@ -51,9 +56,10 @@ export const AppRouter: React.FC<AppRouterProps> = ({
 
             {currentRoute === 'dashboard' && (
               <DashboardScreen
-                onStartSession={(id, count) => {
+                onStartSession={(id, count, timedConfig) => {
                   setActiveSessionId(id);
                   if (count) setActiveQuestionCount(count);
+                  if (timedConfig) setActiveTimedConfig(timedConfig);
                   setCurrentRoute('quiz');
                 }}
                 onLogout={() => setCurrentRoute('auth')}
@@ -64,6 +70,9 @@ export const AppRouter: React.FC<AppRouterProps> = ({
               <QuizScreen
                 sessionId={activeSessionId}
                 questionCount={activeQuestionCount}
+                isTimed={activeTimedConfig.isTimed}
+                timeLimitMinutes={activeTimedConfig.timeLimitMinutes}
+                examMode={activeTimedConfig.examMode}
                 onSessionFinalized={(_finalScore) => {
                   setCurrentRoute('results');
                 }}

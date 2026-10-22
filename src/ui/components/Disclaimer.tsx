@@ -12,7 +12,7 @@ export const Disclaimer: React.FC<{ className?: string }> = ({ className = '' })
   return (
     <footer
       data-testid="unofficial-footer"
-      className={`border-t border-slate-200 dark:border-slate-900 bg-slate-100 dark:bg-slate-950 px-6 py-4 text-xs font-mono text-slate-600 dark:text-slate-400 transition-colors ${className}`}
+      className={`border-t border-slate-200 dark:border-slate-900 bg-slate-100 dark:bg-slate-950 px-6 py-4 text-xs font-sans text-slate-600 dark:text-slate-400 transition-colors ${className}`}
     >
       <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-2 text-amber-800 dark:text-amber-300/90 font-medium">

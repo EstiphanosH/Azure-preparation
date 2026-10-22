@@ -25,19 +25,19 @@ export const Button: React.FC<ButtonProps> = ({
   ...rest
 }) => {
   const baseClasses =
-    'inline-flex items-center justify-center font-medium font-mono rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-slate-950 disabled:opacity-50 disabled:cursor-not-allowed';
+    'inline-flex items-center justify-center font-sans font-semibold rounded-lg transition-all focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-slate-950 disabled:opacity-50 disabled:cursor-not-allowed';
 
   const sizeClasses = {
-    sm: 'px-2.5 py-1.5 text-xs min-h-[36px]',
+    sm: 'px-3 py-1.5 text-xs min-h-[36px]',
     md: 'px-4 py-2 text-sm min-h-[44px]',
     lg: 'px-6 py-3 text-base min-h-[48px]',
   }[size];
 
   const variantClasses = {
-    primary: 'bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold shadow-sm dark:shadow-md shadow-cyan-500/20',
-    secondary: 'bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-300 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-slate-100 dark:border-slate-700',
-    danger: 'bg-rose-600 hover:bg-rose-500 text-white font-bold',
-    outline: 'border border-cyan-600 dark:border-cyan-500/40 text-cyan-700 dark:text-cyan-300 hover:bg-cyan-50 dark:hover:bg-cyan-950/40',
+    primary: 'bg-sky-600 hover:bg-sky-500 active:bg-sky-700 text-white font-semibold shadow-xs hover:shadow-sm',
+    secondary: 'bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-slate-100 dark:border-slate-700',
+    danger: 'bg-rose-600 hover:bg-rose-500 text-white font-semibold shadow-xs',
+    outline: 'border border-sky-600/40 dark:border-sky-500/40 text-sky-700 dark:text-sky-300 hover:bg-sky-50 dark:hover:bg-sky-950/40',
     ghost: 'text-slate-600 hover:text-slate-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-slate-200 dark:hover:bg-slate-800/60',
   }[variant];
 

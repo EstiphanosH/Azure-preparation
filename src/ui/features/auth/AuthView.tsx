@@ -109,7 +109,7 @@ export const AuthView: React.FC<AuthViewProps> = ({
   const activeError = clientError || errorMessage;
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col justify-between font-mono transition-colors">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#0B0F19] text-slate-900 dark:text-slate-100 flex flex-col justify-between font-sans antialiased transition-colors">
       <div className="flex justify-end p-4">
         <ThemeToggle />
       </div>
@@ -117,10 +117,10 @@ export const AuthView: React.FC<AuthViewProps> = ({
       <main className="flex-1 flex items-center justify-center p-4">
         <Card className="w-full max-w-md shadow-xl p-6 sm:p-8 space-y-6">
           <div className="text-center space-y-2">
-            <div className="inline-flex p-3 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-600 dark:text-cyan-400 mb-1">
+            <div className="inline-flex p-3 rounded-xl bg-sky-50 dark:bg-sky-950/60 border border-sky-200 dark:border-sky-800/60 text-sky-700 dark:text-sky-300 mb-1">
               <ShieldCheck className="w-6 h-6" />
             </div>
-            <h1 className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">
+            <h1 className="font-display text-xl font-bold tracking-tight text-slate-900 dark:text-white">
               {mode === 'login' ? 'Candidate Authentication' : 'Register Diagnostic Profile'}
             </h1>
             <p className="text-xs text-slate-600 dark:text-slate-400">
@@ -164,7 +164,7 @@ export const AuthView: React.FC<AuthViewProps> = ({
                     <button
                       type="button"
                       onClick={handleGeneratePassword}
-                      className="text-[10px] text-cyan-600 dark:text-cyan-400 hover:underline flex items-center gap-1 font-normal"
+                      className="text-[10px] text-sky-700 dark:text-sky-300 hover:underline flex items-center gap-1 font-normal"
                     >
                       <Sparkles className="w-3 h-3" />
                       <span>Suggest Compliant Password</span>
@@ -184,7 +184,7 @@ export const AuthView: React.FC<AuthViewProps> = ({
                 }}
                 placeholder="••••••••••••"
                 disabled={isLoading}
-                className="w-full px-3 py-2.5 rounded-lg bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-800 min-h-[44px] text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 text-xs"
+                className="w-full px-3 py-2.5 rounded-lg bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-800 min-h-[44px] text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500 text-xs"
               />
 
               {mode === 'register' && (
@@ -256,7 +256,7 @@ export const AuthView: React.FC<AuthViewProps> = ({
               <Button
                 type="button"
                 variant="outline"
-                className="w-full text-xs text-cyan-700 dark:text-cyan-300 border-cyan-400 dark:border-cyan-700/60 hover:bg-cyan-50 dark:hover:bg-cyan-950/40"
+                className="w-full text-xs text-sky-700 dark:text-sky-300 border-sky-300 dark:border-sky-800/80 hover:bg-sky-50 dark:hover:bg-sky-950/40"
                 onClick={() => {
                   setEmail('candidate@cloudfix.edu');
                   setPassword('P@ssword123!');
@@ -271,7 +271,7 @@ export const AuthView: React.FC<AuthViewProps> = ({
               <Button
                 type="button"
                 variant="outline"
-                className="w-full text-xs text-cyan-700 dark:text-cyan-300 border-cyan-400 dark:border-cyan-700/60 hover:bg-cyan-50 dark:hover:bg-cyan-950/40"
+                className="w-full text-xs text-sky-700 dark:text-sky-300 border-sky-300 dark:border-sky-800/80 hover:bg-sky-50 dark:hover:bg-sky-950/40"
                 onClick={handleFillDemoCandidate}
                 disabled={isLoading}
               >
@@ -287,7 +287,7 @@ export const AuthView: React.FC<AuthViewProps> = ({
                 setClientError(null);
                 onToggleMode();
               }}
-              className="text-xs text-cyan-700 dark:text-cyan-400 hover:text-cyan-800 dark:hover:text-cyan-300 underline underline-offset-4 focus:outline-none focus:ring-2 focus:ring-cyan-500 rounded px-2 py-1"
+              className="text-xs text-sky-700 dark:text-sky-300 hover:text-sky-800 dark:hover:text-sky-200 underline underline-offset-4 focus:outline-none focus:ring-2 focus:ring-sky-500 rounded px-2 py-1"
             >
               {mode === 'login'
                 ? "Don't have an account? Register new candidate"
