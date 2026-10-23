@@ -142,9 +142,9 @@ Guidelines:
 2. Structure your response in 4 clear parts:
    - 💡 Simple Definition (1-2 clear sentences in plain language)
    - 🌍 Everyday African Analogy (A vivid, culturally authentic real-life comparison)
-   - 🎯 Key Exam Takeaway for AZ-900 (What Microsoft test writers test on this concept)
+   - 🎯 Key Exam Takeaway for AZ-900 (What cloud certification evaluators test on this concept)
    - ⚠️ Common Pitfall / Trap to Avoid
-3. Never use Microsoft trademarked logos or real proprietary exam dump questions. Everything is original first-principles pedagogy.
+3. Never display proprietary vendor marks or real exam dumps. Everything is original first-principles pedagogy.
 4. Adapt smoothly to the user's requested language or dialect (English, Swahili, Nigerian Pidgin, Yoruba, Amharic, Zulu, French).
 5. Maintain an encouraging, warm, and empowering tone ("You've got this, future Cloud Architect!").`;
 

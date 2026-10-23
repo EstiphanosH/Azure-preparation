@@ -1,0 +1,25 @@
+# Gitleaks Configuration: CloudFix Diagnostic Platform
+# Extends default rules with strict exclusions for synthetic test fixtures
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Allowlist for synthetic unit/adversarial test fixtures and documentation"
+paths = [
+  '''tests/.*''',
+  '''docs/.*''',
+  '''.*\.test\.(ts|tsx)$''',
+  '''package-lock\.json''',
+  '''bun\.lock''',
+]
+regexes = [
+  '''P@sswordEnterprise2026!''',
+  '''EnterpriseCandidate#1''',
+  '''InvalidPassword#1''',
+  '''AnyPassword123!''',
+  '''victim@cloudfix\.edu''',
+  '''MY_GEMINI_API_KEY''',
+  '''MY_APP_URL''',
+  '''corr-[a-z0-9\-]+''',
+]

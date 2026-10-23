@@ -43,9 +43,13 @@ jobs:
         run: npm audit --audit-level=high
 
       - name: Gitleaks Secrets Detection
-        uses: gitleaks/gitleaks-action@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if ! command -v gitleaks >/dev/null 2>&1; then
+            echo "Installing standalone Gitleaks release binary..."
+            curl -sSfL https://github.com/gitleaks/gitleaks/releases/download/v8.18.2/gitleaks_8.18.2_linux_x64.tar.gz | sudo tar -xz -C /usr/local/bin gitleaks || true
+          fi
+          echo "Executing Gitleaks scan with .gitleaks.toml configuration..."
+          gitleaks detect --config=.gitleaks.toml --source=. --no-git --redact --verbose
 
       - name: Copyright & Trademark Anti-Infringement Gate
         run: |
