@@ -7,6 +7,7 @@ import React, { useState, useEffect } from 'react';
 import { Card } from '../../components/Card.tsx';
 import { Button } from '../../components/Button.tsx';
 import { Badge } from '../../components/Badge.tsx';
+import { Modal } from '../../components/Modal.tsx';
 import {
   Zap,
   CheckCircle2,
@@ -96,11 +97,16 @@ export const QuickQuizSection: React.FC<QuickQuizSectionProps> = ({
     }
   };
 
+  const [isClearConfirmOpen, setIsClearConfirmOpen] = useState<boolean>(false);
+
   const handleClearHistory = () => {
-    if (window.confirm('Are you sure you want to clear your Quick Quiz progress history?')) {
-      clearQuickQuizHistory();
-      setHistory([]);
-    }
+    setIsClearConfirmOpen(true);
+  };
+
+  const handleConfirmClearHistory = () => {
+    clearQuickQuizHistory();
+    setHistory([]);
+    setIsClearConfirmOpen(false);
   };
 
   return (
@@ -638,6 +644,35 @@ export const QuickQuizSection: React.FC<QuickQuizSectionProps> = ({
         )}
       </Card>
       )}
+
+      {/* Accessible Non-Blocking Clear History Modal */}
+      <Modal
+        isOpen={isClearConfirmOpen}
+        onClose={() => setIsClearConfirmOpen(false)}
+        title="Clear Quick Quiz History"
+      >
+        <div className="space-y-4">
+          <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+            Are you sure you want to clear your historical Quick Quiz attempts? This will reset all domain mastery benchmarks and recent score records.
+          </p>
+          <div className="flex items-center justify-end gap-2 pt-2 border-t border-slate-200 dark:border-slate-800">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setIsClearConfirmOpen(false)}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="danger"
+              size="sm"
+              onClick={handleConfirmClearHistory}
+            >
+              Clear History
+            </Button>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 };

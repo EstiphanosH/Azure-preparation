@@ -15,6 +15,7 @@ import {
 import { Card } from '../../components/Card.tsx';
 import { Button } from '../../components/Button.tsx';
 import { Badge } from '../../components/Badge.tsx';
+import { Modal } from '../../components/Modal.tsx';
 import {
   RotateCw,
   ChevronLeft,
@@ -122,11 +123,16 @@ export const FlashcardViewer: React.FC<FlashcardViewerProps> = ({
     setIsFlipped(false);
   };
 
+  const [isResetModalOpen, setIsResetModalOpen] = useState<boolean>(false);
+
   const handleResetMastery = () => {
-    if (window.confirm('Reset mastery progress for all 40 flashcards?')) {
-      resetFlashcardMastery();
-      setMastery({});
-    }
+    setIsResetModalOpen(true);
+  };
+
+  const handleConfirmReset = () => {
+    resetFlashcardMastery();
+    setMastery({});
+    setIsResetModalOpen(false);
   };
 
   // Keyboard navigation shortcuts
@@ -576,6 +582,35 @@ export const FlashcardViewer: React.FC<FlashcardViewerProps> = ({
           </div>
         </div>
       ) : null}
+
+      {/* Accessible Non-Blocking Reset Confirmation Modal */}
+      <Modal
+        isOpen={isResetModalOpen}
+        onClose={() => setIsResetModalOpen(false)}
+        title="Reset Flashcard Mastery Progress"
+      >
+        <div className="space-y-4">
+          <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+            Are you sure you want to reset your active recall mastery status for all 40 flashcards? This will reset your mastery counter to 0% and cannot be undone.
+          </p>
+          <div className="flex items-center justify-end gap-2 pt-2 border-t border-slate-200 dark:border-slate-800">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setIsResetModalOpen(false)}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="danger"
+              size="sm"
+              onClick={handleConfirmReset}
+            >
+              Reset Mastery
+            </Button>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 };
