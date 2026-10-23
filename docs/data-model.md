@@ -7,6 +7,10 @@ This database schema is an independent educational diagnostic specification. It 
 
 ## 2. Entity-Relationship Diagram (ERD)
 
+![Database Architecture & Entity-Relationship Diagram](diagrams/generated/database_erd.png)
+
+*Python Database Architecture as Code: [`docs/diagrams/database_erd.py`](diagrams/database_erd.py)*
+
 ```mermaid
 erDiagram
     PROFILES ||--o{ QUIZ_SESSIONS : "initiates"

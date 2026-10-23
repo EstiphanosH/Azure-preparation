@@ -54,6 +54,10 @@ Scored on a scale of 1 to 5 points across 8 distinct architectural layers. Every
 
 Every component is explicitly partitioned within an assigned, labeled trust boundary.
 
+![Multi-Tier System Architecture](diagrams/generated/system_architecture.png)
+
+*Python Architecture as Code: [`docs/diagrams/system_architecture.py`](diagrams/system_architecture.py)*
+
 ```mermaid
 graph TD
   subgraph TB_PUBLIC["Trust Boundary 0: Public Internet / Untrusted Client"]
@@ -121,6 +125,10 @@ graph TD
 ## Data Flow Diagram: Diagnostic Attempt Lifecycle
 
 The diagram below documents the complete request, database evaluation, and cache invalidation lifecycle for a scenario diagnostic attempt.
+
+![Diagnostic Attempt Lifecycle](diagrams/generated/data_flow_lifecycle.png)
+
+*Python Data Flow as Code: [`docs/diagrams/data_flow_lifecycle.py`](diagrams/data_flow_lifecycle.py)*
 
 ```mermaid
 sequenceDiagram

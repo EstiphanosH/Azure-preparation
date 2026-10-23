@@ -7,6 +7,10 @@ This document specifies the automated CI/CD deployment pipeline, instantaneous c
 
 ## 1. Deployment Pipeline Architecture
 
+![Deployment Pipeline & Zero-Downtime Rollback](diagrams/generated/deployment_pipeline.png)
+
+*Python Deployment Pipeline as Code: [`docs/diagrams/deployment_pipeline.py`](diagrams/deployment_pipeline.py)*
+
 ```
 [Git Commit to main] 
        │

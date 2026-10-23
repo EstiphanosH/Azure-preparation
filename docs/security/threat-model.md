@@ -23,6 +23,10 @@ In accordance with `docs/data-classification.md`, all system assets are cataloge
 
 ## 2. Trust Boundaries & Architectural Diagram
 
+![Security & STRIDE Trust Boundaries](../diagrams/generated/security_trust_boundaries.png)
+
+*Python Security Architecture as Code: [`docs/diagrams/security_trust_boundaries.py`](../diagrams/security_trust_boundaries.py)*
+
 ```text
 [ UNTRUSTED ZONE: Candidate Browser / Client ]
       │
